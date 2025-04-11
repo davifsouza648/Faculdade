@@ -1,0 +1,1 @@
+A linha “JScrollPane rolagem = new JscrollPane(texto);” serve para adicionar uma barra de rolagem a JTextArea do programa, visto que muitas vezes pelo tamanho de 40 linhas da mesma, pode ocasionar em certas partes do texto não ficarem visíveis durante a execução do programa, sendo assim possível lê-la completamente.

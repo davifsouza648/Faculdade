@@ -1,0 +1,1 @@
+O programa irá apresentar um editor de texto, na parte superior do programa terá 4 botões, sendo eles: "Abrir", "Salvar", "Salvar Como" e "Fechar". Na parte central do programa há uma textArea de 10 linhas e 40 colunas com um scrollPane que permite a rolagem caso a altura exceder os limites visíveis. A janela é redimensionada com pack() e é exibida com setVisible(true).
