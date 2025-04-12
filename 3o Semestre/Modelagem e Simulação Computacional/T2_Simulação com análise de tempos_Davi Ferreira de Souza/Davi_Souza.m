@@ -16,6 +16,8 @@ restosTsAleatorio = [];
 temposOcupado = [];
 temposDesocupado = [];
 mediasTemposAteAtendido = [];
+maioresTemposAteAtendido = [];
+menoresTemposAteAtendido = [];
 
 
 for iteracao = numeroIteracoes
@@ -29,15 +31,15 @@ for iteracao = numeroIteracoes
 
     for minuto = t
         if mod(minuto,2)
-            qtd = poissrnd(1); %Adicione clientes em ticks impares.
-            fila = [fila, ones(1, qtd)];
-            temposFila = [temposFila, zeros(1,qtd)];
+            qtd = poissrnd(1); %Adicione clientes em ticks impares (média 1 pessoa por chamada).
+            fila = [fila, ones(1, qtd)]; %Adiciona 1s equivalentes a quantidade de pessoas que chegam
+            temposFila = [temposFila, zeros(1,qtd)]; %Adiciona zeros para manter conta do tempo de espera do cliente na fila
         end
 
-        historico = [historico, length(fila)];
+        historico = [historico, length(fila)]; %Mantém o histórico da fila
         temposFila = temposFila + 0.5; %Adiciona 0.5 minutos em cada tique em cada iteração para cada cliente não atendido.
             
-        if tempo == 0 && isempty(fila)
+        if tempo == 0 && isempty(fila) %Se não há atendimentos ocorrendo e a fila esta vazia então o caixa esta livre.
             tempoDesocupado = tempoDesocupado + 0.5; %Adiciona tempoDesocupado para cada vez que o tempo for zero e a fila estiver vazia.
         end
 
@@ -60,74 +62,89 @@ for iteracao = numeroIteracoes
     temposOcupado = [temposOcupado, tempoOcupado];
     temposDesocupado = [temposDesocupado, tempoDesocupado];
     mediasTemposAteAtendido = [mediasTemposAteAtendido, mean(temposAteAtendido)];
+    maioresTemposAteAtendido = [maioresTemposAteAtendido, max(temposAteAtendido)];
+    menoresTemposAteAtendido = [menoresTemposAteAtendido, min(temposAteAtendido)];
 
 end
 
 % ANÁLISE:
-fprintf("\nRelatório:\n\n");
-fprintf("Análise da fila:\n");
-fprintf("Média das médias do tamanho da fila: %.2f\n", mean(mediasTsAleatorio));
+fprintf("RELATÓRIO DO TRABALHO 2\n\n");
+
+fprintf("***************************************************\n");
+
+fprintf("ANÁLISE DE TAMANHO DE FILA:\n"); %Relatório Fila
+fprintf("Tamanho médio da fila: %.2f\n", mean(mediasTsAleatorio));
 fprintf("Desvio padrão: %.2f\n", std(mediasTsAleatorio));
-fprintf("Coeficiente de variação: %.2f %%\n", std(mediasTsAleatorio)/mean(mediasTsAleatorio)*100);
-fprintf("Maior valor absoluto encontrado: %d\n", max(maioresTsAleatorio));
-fprintf("Maior resto de fila no encerramento: %d\n\n", max(restosTsAleatorio));
+fprintf("Coeficiente de Variação: %.2f %%\n", std(mediasTsAleatorio)/mean(mediasTsAleatorio)*100);
+fprintf("Maior valor absoluto da fila: %d\n", max(maioresTsAleatorio));
+fprintf("Maior tamanho de fila no encerramento: %d\n\n", max(restosTsAleatorio));
+
+fprintf("***************************************************\n");
 
 %Adição de análises
-fprintf("Análise de ocupação do servidor:\n"); %Ocupação do servidor
-fprintf("Média de tempo de ocupação do servidor: %.2f\n minutos", mean(temposOcupado));
-fprintf("Desvio padrão: %.2f\n", std(temposOcupado));
-fprintf("Coeficiente de variação: %.2f %%\n\n", std(temposOcupado)/mean(temposOcupado)*100);
+fprintf("ANÁLISE DO TEMPO DE USUÁRIOS NA FILA\n"); %Análise de usuários na fila
+fprintf("Tempo médio em fila: %.1f minutos\n", mean(mediasTemposAteAtendido));
+fprintf("Desvio padrão: %.2f\n", std(mediasTemposAteAtendido));
+fprintf("Coeficiente de Variação: %.2f %%\n", std(mediasTemposAteAtendido)/mean(mediasTemposAteAtendido)*100);
+fprintf("Maior valor absoluto: %.1f minutos\n", max(maioresTemposAteAtendido));
+fprintf("Menor valor absoluto: %.1f minutos\n\n", min(menoresTemposAteAtendido));
 
-fprintf("Análise de desocupação do servidor:\n"); %Desocupação do servidor
-fprintf("Média de tempo de descupação do servidor: %.2f minutos\n", mean(temposDesocupado));
+fprintf("***************************************************\n");
+
+fprintf("ANÁLISE DO TEMPO DE OCUPAÇÃO DO SERVIDOR\n");
+fprintf("Tempo médio de ocupação do servidor: %.1f minutos\n", mean(temposOcupado));
+fprintf("Desvio padrão: %.2f\n", std(temposOcupado));
+fprintf("Coeficiente de Variação: %.2f %%\n", std(temposOcupado)/mean(temposOcupado)*100);
+fprintf("Tempo médio do servidor livre: %.1f minutos\n",mean(temposDesocupado));
 fprintf("Desvio padrão: %.2f\n", std(temposDesocupado));
 fprintf("Coeficiente de variação: %.2f %%\n\n", std(temposDesocupado)/mean(temposDesocupado)*100);
 
-fprintf("Análise de tempo de atendimento por cliente:\n"); %Tempo de atendimento por cliente
-fprintf("Média de tempo até ser atendido por pessoa: %.2f minutos\n", mean(temposAteAtendido));
-fprintf("Desvio padrão: %.2f\n", std(temposAteAtendido));
-fprintf("Coeficiente de variação: %.2f %%\n\n", std(temposAteAtendido)/mean(temposAteAtendido)*100);
-
 
 %Plot e salvamento dos gráficos
-figure;
+fig = figure('Visible', 'off');
 bar(mediasTsAleatorio);
 title('Tamanho Médio das filas');
 xlabel('Número do Experimento');
 ylabel('Tamanho da Fila');
 saveas(gcf, 'grafico_media_fila.png');
+close(fig);
 
-figure;
+fig = figure('Visible', 'off');
 bar(maioresTsAleatorio);
 title('Maior Tamanho Absoluto da Fila');
 xlabel('Número do Experimento');
 ylabel('Tamanho da Fila');
 saveas(gcf, 'grafico_maior_fila.png');
+close(fig);
 
-figure;
+fig = figure('Visible', 'off');
 bar(restosTsAleatorio);
 title('Tamanho Absoluto da Fila no Encerramento');
 xlabel('Número do Experimento');
 ylabel('Tamanho da Fila');
 saveas(gcf, 'grafico_resto_fila.png');
+close(fig);
 
-figure;
+fig = figure('Visible', 'off');
 bar(temposOcupado);
 title('Ocupação do Servidor');
 xlabel('Número do Experimento');
 ylabel('Tempo ocupado (em minutos)');
 saveas(gcf, 'grafico_tempo_ocupacao.png');
+close(fig);
 
-figure;
+fig = figure('Visible', 'off');
 bar(temposDesocupado);
 title('Desocupação do Servidor');
 xlabel('Número do experimento');
 ylabel('Tempo desocupado (em minutos)');
 saveas(gcf, 'grafico_tempo_desocupado.png');
+close(fig);
 
-figure;
+fig = figure('Visible', 'off');
 bar(mediasTemposAteAtendido);
 title('Tempo médio até ser atendido');
 xlabel('Número do experimento');
 ylabel('Tempo médio até ser atendido (em minutos)');
 saveas(gcf, 'grafico_tempo_ate_atendido.png');
+close(fig);
