@@ -15,6 +15,7 @@ maioresTsAleatorio = [];
 restosTsAleatorio = [];
 temposOcupado = [];
 temposDesocupado = [];
+temposMediosPorPessoa = [];
 mediasTemposAteAtendido = [];
 maioresTemposAteAtendido = [];
 menoresTemposAteAtendido = [];
@@ -28,6 +29,7 @@ for iteracao = numeroIteracoes
     tempo = 0;
     tempoOcupado = 0;
     tempoDesocupado = 0;
+    atendimentos = 0;
 
     for minuto = t
         if mod(minuto,2)
@@ -44,7 +46,8 @@ for iteracao = numeroIteracoes
         end
 
         if tempo == 0 && ~isempty(fila)
-            fila(1) = [];          % atende uma pessoa
+            fila(1) = [];  % atende uma pessoa
+            atendimentos = atendimentos + 1;
             tempo = randi(4) / 2; % tempo de atendimento aleatório
             temposAteAtendido = [temposAteAtendido, temposFila(1)]; %Adiciona nos temposAteAtendido o tempo que demorou para o cliente ser atendido
             temposFila(1) = []; %Remove o tempo de atendimento do cliente ja atendido
@@ -55,7 +58,10 @@ for iteracao = numeroIteracoes
             tempoOcupado = tempoOcupado + 0.5; %Se esta atendendo, aumenta o tempo ocupado do servidor.
         end
     end
-
+    
+    tempoMedioPorPessoa = tempoOcupado / atendimentos;
+    temposMediosPorPessoa = [temposMediosPorPessoa, tempoMedioPorPessoa];
+    
     mediasTsAleatorio = [mediasTsAleatorio, mean(historico)]; %Adiciona nos vetores que serão plotados os valores dessa iteração
     maioresTsAleatorio = [maioresTsAleatorio, max(historico)];
     restosTsAleatorio = [restosTsAleatorio, length(fila)];
@@ -83,21 +89,25 @@ fprintf("***************************************************\n");
 
 %Adição de análises
 fprintf("ANÁLISE DO TEMPO DE USUÁRIOS NA FILA\n"); %Análise de usuários na fila
-fprintf("Tempo médio em fila: %.1f minutos\n", mean(mediasTemposAteAtendido));
+fprintf("Tempo médio em fila: %.2f minutos\n", mean(mediasTemposAteAtendido));
 fprintf("Desvio padrão: %.2f\n", std(mediasTemposAteAtendido));
 fprintf("Coeficiente de Variação: %.2f %%\n", std(mediasTemposAteAtendido)/mean(mediasTemposAteAtendido)*100);
-fprintf("Maior valor absoluto: %.1f minutos\n", max(maioresTemposAteAtendido));
-fprintf("Menor valor absoluto: %.1f minutos\n\n", min(menoresTemposAteAtendido));
+fprintf("Maior valor absoluto: %.2f minutos\n", max(maioresTemposAteAtendido));
+fprintf("Menor valor absoluto: %.2f minutos\n\n", min(menoresTemposAteAtendido));
 
 fprintf("***************************************************\n");
 
 fprintf("ANÁLISE DO TEMPO DE OCUPAÇÃO DO SERVIDOR\n");
-fprintf("Tempo médio de ocupação do servidor: %.1f minutos\n", mean(temposOcupado));
+fprintf("Tempo médio de ocupação do servidor: %.2f minutos\n", mean(temposOcupado));
 fprintf("Desvio padrão: %.2f\n", std(temposOcupado));
-fprintf("Coeficiente de Variação: %.2f %%\n", std(temposOcupado)/mean(temposOcupado)*100);
-fprintf("Tempo médio do servidor livre: %.1f minutos\n",mean(temposDesocupado));
+fprintf("Coeficiente de variação: %.2f %%\n", std(temposOcupado)/mean(temposOcupado)*100);
+fprintf("Tempo médio que o servidor usou por pessoa: %.2f minutos\n", mean(temposMediosPorPessoa));
+fprintf("Desvio padrão: %.2f\n", std(temposMediosPorPessoa));
+fprintf("Coeficiente de Variação: %.2f %%\n", std(temposMediosPorPessoa)/mean(temposMediosPorPessoa)*100);
+fprintf("Tempo médio do servidor livre: %.2f minutos\n",mean(temposDesocupado));
 fprintf("Desvio padrão: %.2f\n", std(temposDesocupado));
-fprintf("Coeficiente de variação: %.2f %%\n\n", std(temposDesocupado)/mean(temposDesocupado)*100);
+fprintf("Coeficiente de variação: %.2f %%\n", std(temposDesocupado)/mean(temposDesocupado)*100);
+fprintf("Maior tempo com o servidor ocioso: %.2f minutos\n\n", max(temposDesocupado));
 
 
 %Plot e salvamento dos gráficos
