@@ -68,10 +68,6 @@ def plot_graficos(valores_fx, valores_tempo, valores_iteracoes, numproblema):
     mpl.close()
 
 
-
-
-
-
 def derivada(func,x):
     h = 1e-10
 
