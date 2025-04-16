@@ -9,7 +9,7 @@ typedef struct reg *no;
 struct reg
 {
     int info;
-    no prox, fim;
+    no prox;
 };
 
 typedef struct
