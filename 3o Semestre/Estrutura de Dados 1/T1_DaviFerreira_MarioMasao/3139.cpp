@@ -2,7 +2,10 @@
 //RA: 241024676 e 241022321
 //16/04/2025
 
-#include <bits/stdc++.h>
+#include <stack>
+#include <string>
+#include <iostream>
+#include <cctype>
 
 using namespace std;
 

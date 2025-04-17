@@ -1,19 +1,26 @@
-#include <bits/stdc++.h>
+#include <queue>
+#include <stack>
+#include <sstream>
+#include <iostream>
+
 using namespace std;
 
-int prioridade(char c) {
+int prioridade(char c) 
+{
     if (c == '^') return 4;
     if (c == '*' || c == '/') return 3;
     if (c == '+' || c == '-') return 2;
     return 0;
 }
 
-bool e_operando(const string& str) {
+bool e_operando(const string& str) 
+{
     string operadores = "+-*/^()";
     return operadores.find(str) == string::npos;
 }
 
-string infixa_pos_fixa(const string& expressao) {
+string infixa_pos_fixa(string expressao) 
+{
     string retorno = "";
     string operadores_string = "^*/+-";
     stack<string> operadores;
@@ -30,7 +37,8 @@ string infixa_pos_fixa(const string& expressao) {
 
     for (string str : tokens) 
     {
-        if (e_operando(str)) {
+        if (e_operando(str)) 
+        {
             output.push(str);
         } 
         else if (operadores_string.find(str) != string::npos) 
@@ -73,7 +81,8 @@ string infixa_pos_fixa(const string& expressao) {
     return retorno;
 }
 
-int main() {
+int main() 
+{
     string expressao;
     getline(cin, expressao);
 
