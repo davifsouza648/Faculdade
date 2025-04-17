@@ -9,7 +9,8 @@
 
 typedef struct reg *arvore;
 
-struct reg {
+struct reg 
+{
     char palavra[100];
     arvore esquerda, direita;
 };
@@ -46,28 +47,6 @@ void imprime_ordenado(arvore arv)
     imprime_ordenado(arv->direita);
 }
 
-void toMinusculo(char *str) 
-{
-    for (int i = 0; str[i]; i++) 
-    {
-        str[i] = tolower((unsigned char)str[i]);
-    }
-}
-
-void limpaPontuacao(char *str) 
-{
-    int j = 0;
-    char temp[100];
-    for (int i = 0; str[i] != '\0'; i++)
-    {
-        if (isalpha((unsigned char)str[i])) 
-        {
-            temp[j++] = str[i];
-        }
-    }
-    temp[j] = '\0';
-    strcpy(str, temp);
-}
 
 int main() {
     arvore arv;
@@ -77,7 +56,8 @@ int main() {
     char palavra[100];
     int i, j;
 
-    while (fgets(linha, sizeof(linha), stdin)) {
+    while (fgets(linha, sizeof(linha), stdin)) 
+    {
         i = 0;
         while (linha[i] != '\0') {
             j = 0;
