@@ -1,0 +1,11 @@
+ActionListener:
+
+O ActionListener é usado quando você precisa responder a uma ação realizada pelo usuário em um componente que dispara eventos de ação, como JButton, JComboBox, JTextField (ao pressionar Enter), entre outros. Por exemplo, ao pressionar um botão, esse botão dispara um evento de ação que é capturado pelo ActionListener. Esse listener é ideal para implementar funcionalidades como o clique de botões ou a mudança de seleção em uma JComboBox.
+
+KeyListener:
+
+O KeyListener é utilizado para monitorar entradas do teclado. Ele pode capturar eventos quando uma tecla é pressionada (keyPressed), quando um caractere é digitado (keyTyped), ou quando uma tecla é solta (keyReleased). Esse listener é ideal para funcionalidades onde é necessário checar quais teclas foram apertadas pelo usuário, como em campos de texto personalizados, jogos, ou validações específicas de entrada.
+
+MouseListener:
+
+O MouseListener é utilizado para monitorar entradas do mouse. Ele detecta eventos como cliques (mouseClicked), pressionamento do botão do mouse (mousePressed), liberação do botão do mouse (mouseReleased), entrada e saída do mouse sobre o componente (mouseEntered e mouseExited), entre outros. Esse listener é ideal para funcionalidades que exigem monitoramento do mouse, como interações gráficas (botões, imagens clicáveis), arrastar e soltar (drag-and-drop), ou mudanças visuais quando o mouse passa sobre um item.

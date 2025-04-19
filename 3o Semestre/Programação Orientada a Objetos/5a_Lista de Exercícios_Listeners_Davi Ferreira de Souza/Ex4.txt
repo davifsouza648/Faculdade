@@ -1,0 +1,11 @@
+Listener:
+
+Interface que define todos os métodos necessários para capturar e responder a eventos específicos. É idealmente utilizado
+para implementações onde é necessário um alto grau de customização, sendo possível definir exatamente o que acontecerá em cada evento durante 
+o programa.
+
+Adapater: 
+
+Bem semelhante ao listener, mas é uma interface que define todos os métodos do listener como vazios, sendo assim não é necessário
+sobreescrever todos os métodos da interface. É idealmente utilizado quando é necessário uma implementação mais simples, podendo só customizar
+os métodos necessários para aquela implementação.
