@@ -17,7 +17,7 @@ class Main
 
 
 
-            mainFrame = new JFrame("JUST EAT");
+            mainFrame = new JFrame("Botao Flutuante");
             mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             mainFrame.setSize(800, 800);
             mainFrame.setLocationRelativeTo(null);
