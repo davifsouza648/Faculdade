@@ -131,12 +131,51 @@ void pos_order(arvore arv) //Esquerda, direita, pai
     printf("%d ", arv->info);
 }
 
-void remove_arvore(arvore *arv, int num)
+arvore encontrar_minimo(arvore arv)
 {
-
+    while (arv->esquerda != NULL)
+    {
+        arv = arv->esquerda;
+    }
+    return arv;
 }
 
-void impressão_nivel(arvore arv)
+arvore remove_no(arvore arv, int num)
+{
+    if (arv == NULL) return NULL;
+
+    if (num < arv->info)
+        arv->esquerda = remove_no(arv->esquerda, num);
+    else if (num > arv->info)
+        arv->direita = remove_no(arv->direita, num);
+    else
+    {
+        // Caso 1: Sem filhos ou só um filho
+        if (arv->esquerda == NULL)
+        {
+            arvore temp = arv->direita;
+            free(arv);
+            return temp;
+        }
+        else if (arv->direita == NULL)
+        {
+            arvore temp = arv->esquerda;
+            free(arv);
+            return temp;
+        }
+
+        // Caso 2: Dois filhos
+        arvore temp = encontrar_minimo(arv->direita);
+        arv->info = temp->info;
+        arv->direita = remove_no(arv->direita, temp->info);
+    }
+
+    return arv;
+}
+
+
+
+void impressao_nivel(arvore arv)
 {
     if(arv == NULL) return;
 
@@ -180,6 +219,9 @@ int main()
     // insere_arvore(&arv, 19);
     // insere_arvore(&arv, 19);
 
+    arv = remove_no(arv, 15);
+    arv = remove_no(arv, 16);
+
 
     printf("Pre ordem: ");
     pre_order(arv);
@@ -191,5 +233,5 @@ int main()
     pos_order(arv);
 
     printf("\nImpressão nivel:\n");
-    impressão_nivel(arv);
+    impressao_nivel(arv);
 }
