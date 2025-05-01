@@ -113,20 +113,20 @@ for iteracao = numeroIteracoes
 end
 
 %Gera o relatório
-fprintf("RELATÓRIO DO TRABALHO 2\n\n");
+fprintf("RELATÓRIO DO TRABALHO 3\n\n");
 
 fprintf("***************************************************\n");
 
 fprintf("ANÁLISE DE TAMANHO DE FILA:\n");
 fprintf("Tamanho médio da fila: %.2f\n", mean(mediasTamanhoFila));
-fprintf("Desvio padrão: %.2f\n", std(mediasTamanhoFila));
+fprintf("Desvio padrão: %.2f pessoas\n", std(mediasTamanhoFila));
 fprintf("Coeficiente de Variação: %.2f %%\n\n", std(mediasTamanhoFila)/mean(mediasTamanhoFila)*100);
 
 fprintf("***************************************************\n");
 
 fprintf("ANÁLISE DE TAMANHO FILA NO ENCERRAMENTO:\n");
 fprintf("Tamanho médio da fila no encerramento: %.2f\n", mean(tamanhosFilaEncerramento));
-fprintf("Desvio padrão: %.2f\n", std(tamanhosFilaEncerramento));
+fprintf("Desvio padrão: %.2f pessoas\n", std(tamanhosFilaEncerramento));
 fprintf("Coeficiente de variação: %.2f %%\n", std(tamanhosFilaEncerramento)/mean(tamanhosFilaEncerramento)*100);
 fprintf("Maior tamanho da fila no encerramento: %d\n", max(tamanhosFilaEncerramento));
 fprintf("Maior tamanho absoluto da fila: %d\n\n", max(maioresTamanhoFila));
@@ -135,14 +135,14 @@ fprintf("***************************************************\n");
 
 fprintf("ANÁLISE DE TEMPO DE OCUPAÇÃO DO SERVIDOR POR PESSOA:\n");
 fprintf("Média de tempo de ocupação do servidor por pessoa: %.2f minutos\n", mean(temposMedioOcupacaoPessoa) / 60);
-fprintf("Desvio Padrão: %.2f\n", std(temposMedioOcupacaoPessoa));
+fprintf("Desvio Padrão: %.2f\n minutos", std(temposMedioOcupacaoPessoa));
 fprintf("Coeficiente de variação: %.2f %%\n\n", std(temposMedioOcupacaoPessoa)/mean(temposMedioOcupacaoPessoa)*100);
 
 fprintf("***************************************************\n");
 
 fprintf("ANÁLISE DE DESOCUPAÇÃO DO SERVIDOR:\n");
 fprintf("Tempo médio de desocupação do servidor: %.2f minutos\n", mean(temposDesocupado)/60);
-fprintf("Desvio padrão: %.2f\n", std(temposDesocupado));
+fprintf("Desvio padrão: %.2f minutos\n", std(temposDesocupado));
 fprintf("Coeficiente de variação: %.2f %%\n", std(temposDesocupado)/mean(temposDesocupado)*100);
 fprintf("Maior tempo absoluto de desocupação do servidor: %.2f minutos\n\n", max(temposDesocupado)/60);
 
@@ -150,7 +150,7 @@ fprintf("***************************************************\n");
 
 fprintf("ANÁLISE DO TEMPO DE USUÁRIOS NA FILA:\n");
 fprintf("Tempo médio em fila: %.2f minutos\n", mean(mediasEsperasFila) / 60);
-fprintf("Desvio padrão: %.2f\n", std(mediasEsperasFila));
+fprintf("Desvio padrão: %.2f minutos\n", std(mediasEsperasFila));
 fprintf("Coeficiente de variação: %.2f %%\n", std(mediasEsperasFila)/mean(mediasEsperasFila)*100);
 fprintf("Maior tempo absoluto que alguém ficou na fila: %.2f minutos\n\n", max(mediasEsperasFila)/60);
 
@@ -158,7 +158,7 @@ fprintf("***************************************************\n");
 
 fprintf("ANÁLISE DE TEMPO DE SERVIÇO APÓS ENCERRAMENTO DO BANCO:\n");
 fprintf("Média de tempo de serviço após encerramento do banco: %.2f minutos\n", mean(temposAbertoAposEncerramento)/60);
-fprintf("Desvio padrão: %.2f\n", std(temposAbertoAposEncerramento));
+fprintf("Desvio padrão: %.2f minutos\n", std(temposAbertoAposEncerramento));
 fprintf("Coeficiente de variação: %.2f %%\n", std(temposAbertoAposEncerramento)/mean(temposAbertoAposEncerramento)*100);
 fprintf("Maior tempo absoluto de serviço após encerramento: %.2f minutos\n", max(temposAbertoAposEncerramento)/60);
 

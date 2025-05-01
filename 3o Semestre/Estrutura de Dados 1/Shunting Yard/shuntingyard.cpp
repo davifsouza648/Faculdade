@@ -87,5 +87,7 @@ int main()
     getline(cin, expressao);
 
     cout << infixa_pos_fixa(expressao) << endl;
+
+    
     return 0;
 }
