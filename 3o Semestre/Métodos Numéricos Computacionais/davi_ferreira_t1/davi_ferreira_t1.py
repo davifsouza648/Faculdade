@@ -313,7 +313,7 @@ def problema_5():
 
 def main():
     os.system("chcp 65001") #Decodificação UTF-8
-    os.system("clear");    #Limpa Console
+    os.system("clear")    #Limpa Console
      
     print("Selecione o problema para analisar: ") #Menu
     print("1 - Problema 1 – Economia: Equilíbrio de Oferta e Demanda")
