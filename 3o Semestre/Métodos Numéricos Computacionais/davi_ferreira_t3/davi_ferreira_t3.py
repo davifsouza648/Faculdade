@@ -38,10 +38,31 @@ def decomposicao_lu(A,b):
 def fatoracao_cholesky(A,b):
     return 0
 
-def jacobi_richardson(A,b, x0, max_iteracoes = 50, erro):
-    return 0
+def jacobi_richardson(A, b, x0, max_iteracoes=50, erro=1e-5):
+    n = len(A)
+    x = x0[:]  # Cópia do vetor inicial
+    x_novo = x0[:]  # Vetor para armazenar a nova iteração
 
-def gauss_seidel(A,b,x0, max_iteracoes = 50, erro):
+    for it in range(max_iteracoes):
+        for i in range(n):
+            soma = 0
+            for j in range(n):
+                if i != j:
+                    soma += A[i][j] * x[j]
+            x_novo[i] = (b[i] - soma) / A[i][i]
+
+        print(f"Iteração {it+1}: x_n = {x_novo}")
+
+
+        erro_max = max(abs(x_novo[i] - x[i]) for i in range(n))
+        if erro_max < erro:
+            break
+
+        x = x_novo[:]  
+
+    return x_novo
+
+def gauss_seidel(A,b,x0,max_iteracoes = 50, erro = 0.1):
     
     xn = [0 for _ in range(len(A))]
 
@@ -53,17 +74,18 @@ def gauss_seidel(A,b,x0, max_iteracoes = 50, erro):
 
 def main():
     matriz = [
-        [10,2,-1],
-        [-3,-6,2], 
-        [1,1,5]
+        [5,2,1],
+        [-1,4,2], 
+        [2,-3,10]
                ]
 
-    b = [27, -61.5, -21.5]
+    b = [7,3,-1]
+    x0 = [-1.4,3.9,0.2]
 
     erro = 1e-5
     max_iteracoes = 50
 
-    print(gauss_compacto(matriz,b))
+    print(jacobi_richardson(matriz,b,x0, 50, 0.1))
 
 
 if __name__ == "__main__":
