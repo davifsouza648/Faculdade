@@ -1,0 +1,3 @@
+Sim, é perfeitamente possível usar SwingUtilities.invokeAndWait(...) em vez de invokeLater para atualizar a JProgressBar a partir de um worker thread. Basta:
+Trocar a chamada
+Tratar as exceções (InterruptedException e InvocationTargetException)

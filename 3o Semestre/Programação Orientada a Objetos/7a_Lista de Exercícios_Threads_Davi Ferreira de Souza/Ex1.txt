@@ -1,0 +1,1 @@
+No primeiro código, a classe ThreadSimples herda diretamente de thread, enquanto na segunda classe ThreadSimples ela implementa a interface Runnable, sendo assim mais flexível, podendo herdar outras classes e implementar outras interfaces.

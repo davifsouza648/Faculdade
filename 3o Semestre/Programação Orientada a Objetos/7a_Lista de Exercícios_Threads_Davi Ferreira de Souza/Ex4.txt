@@ -1,0 +1,1 @@
+Não é necessário usar SwingUtilities.invokeLater na linha 22 porque o método actionPerformed já é executado na Event Dispatch Thread (EDT), que é o único thread responsável e seguro para atualizar componentes gráficos no Swing.

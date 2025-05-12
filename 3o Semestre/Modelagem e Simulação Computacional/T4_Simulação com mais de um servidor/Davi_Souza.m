@@ -4,6 +4,8 @@
 %possível adicionar novos servidores de maneira escalável para análise.
 %30/04/2025
 
+pkg load statistics
+
 rand('twister',sum(100*clock)); %Aleatorizar melhor.
 
 numeroIteracoes = 1:30;

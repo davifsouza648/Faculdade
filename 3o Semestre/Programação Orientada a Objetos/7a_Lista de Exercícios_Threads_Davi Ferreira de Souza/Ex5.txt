@@ -1,0 +1,1 @@
+Não, visto que poderia gerar problemas de desincronização visto que o Swing não é Thread Safe e só é possível ter atualizações coerentes caso seja usado o EDT.

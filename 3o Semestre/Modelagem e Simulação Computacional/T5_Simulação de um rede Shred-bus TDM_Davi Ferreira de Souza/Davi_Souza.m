@@ -4,8 +4,7 @@
 
 pkg load statistics %Carrega o pacote statistics para usar a função poissrnd
 
-
-
+rand('twister',sum(100*clock));
 
 tempo_simulacao = 18000; %Tempo total de simulação
 numero_iteracoes = 30; %Número de iterações
