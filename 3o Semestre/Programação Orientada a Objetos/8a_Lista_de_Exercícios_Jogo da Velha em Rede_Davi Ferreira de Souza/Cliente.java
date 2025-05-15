@@ -137,9 +137,18 @@ public class Cliente
                         out = new PrintWriter(cliente.getOutputStream(), true);
                         in = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
                     }
-                    catch(Exception excep){JOptionPane.showMessageDialog(mainFrame, excep.getMessage(), "Problema na conexão",0);}
+                    catch(Exception excep){JOptionPane.showMessageDialog(mainFrame, excep.getStackTrace(), excep.getMessage(),0);}
                     finally
                     {
+                        String recebido;
+                        try
+                        {
+                            recebido = in.readLine();
+                            if(("START").equals(recebido))
+                            {
+                                menuJogo();
+                            }
+                        }catch(Exception excep){JOptionPane.showMessageDialog(mainFrame, excep.getStackTrace(), excep.getMessage(),0);}
 
                     }
                 }
@@ -188,7 +197,11 @@ public class Cliente
 
     private static void menuJogo()
     {
+        mainFrame.getContentPane().removeAll();
 
+
+        mainFrame.revalidate();
+        mainFrame.repaint();
     }
 
 }
