@@ -12,6 +12,7 @@ public class Cliente
     private static JFrame mainFrame;
 
 
+
     //Cores
     private static Color backgroundColor = new Color(249, 249, 249); // #F9F9F9
     private static Color foregroundColor = new Color(51, 51, 102);   // #333366
@@ -27,10 +28,14 @@ public class Cliente
     private static Font fonte = new Font("Helvetica", Font.PLAIN, 16);
 
     //Rede
-
     private static Socket cliente;
     private static PrintWriter out;
     private static BufferedReader in;
+
+    //Jogo
+    private static int numJogador = 0;
+    private static JButton[] botoes = new JButton[9];
+    private static boolean minhaVez = false;
 
 
 
@@ -144,10 +149,17 @@ public class Cliente
                         try
                         {
                             recebido = in.readLine();
-                            if(("START").equals(recebido))
+                            if(("START1").equals(recebido))
                             {
-                                menuJogo();
+                                numJogador = 1;
                             }
+                            else if(("START2").equals(recebido))
+                            {
+                                numJogador = 2;
+                            }
+
+                            menuJogo();
+                            listenerServidor();
                         }catch(Exception excep){JOptionPane.showMessageDialog(mainFrame, excep.getStackTrace(), excep.getMessage(),0);}
 
                     }
@@ -185,7 +197,7 @@ public class Cliente
         gbc.gridy = 2;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
-        gbc.insets = new Insets(20, 0, 0, 0); // Espaçamento superior
+        gbc.insets = new Insets(20, 0, 0, 0);
 
         painelTextFields.add(botao, gbc);
     
@@ -198,10 +210,147 @@ public class Cliente
     private static void menuJogo()
     {
         mainFrame.getContentPane().removeAll();
+        mainFrame.setTitle("Jogador " + numJogador);
 
+        JPanel painelBotoes = new JPanel(new GridLayout(3, 3, 5, 5));
+
+
+
+        for(int i = 0; i < 9; i++)
+        {
+            JButton botao = new JButton();
+            final int index = i;
+
+            botao.setFont(fonte);
+            botao.setPreferredSize(new Dimension(80,80));
+            
+            botao.setBackground(accentColor);
+            botao.setForeground(Color.WHITE);
+            botao.setFont(fonte.deriveFont(Font.BOLD, 24));
+            botao.setFocusPainted(false);
+            botao.setBorder(BorderFactory.createLineBorder(highlightColor, 2));
+            botao.setOpaque(true); 
+            botao.setContentAreaFilled(true);
+            
+            botao.getModel().addChangeListener(e -> {
+                ButtonModel model = botao.getModel();
+                if (model.isRollover() && minhaVez && botao.getText().isEmpty()) {
+                    botao.setBackground(accentHover);
+                } else {
+                    String text = botao.getText();
+                    if ("X".equals(text)) {
+                        botao.setBackground(new Color(100, 149, 237)); // Azul claro
+                    } else if ("O".equals(text)) {
+                        botao.setBackground(new Color(152, 251, 152)); // Verde claro
+                    } else {
+                        botao.setBackground(accentColor);
+                    }
+                }
+            });
+
+            botao.addMouseListener(new MouseAdapter() 
+            {
+                @Override
+                public void mouseClicked(MouseEvent e) 
+                {
+                    if (minhaVez && botao.getText().isEmpty()) 
+                    {
+                        out.println("JOGADA:" + index);
+                    }
+                }
+            });
+
+            botoes[i] = botao;
+            painelBotoes.add(botao);
+
+        }
+
+        mainFrame.add(painelBotoes);
 
         mainFrame.revalidate();
         mainFrame.repaint();
+    }
+
+    private static void listenerServidor()
+    {
+        new Thread(() -> 
+        {
+            try 
+            {   
+                String linha;
+                while ((linha = in.readLine()) != null) 
+                {
+                    String[] parts = linha.split(":");
+                    switch (parts[0]) 
+                    {
+                        case "ESTADO":
+                            String grid = parts[1];
+                            minhaVez = Integer.parseInt(parts[2]) == 1;
+                            SwingUtilities.invokeLater(() -> updateBoard(grid, minhaVez));
+                            break;
+                        case "GAMEOVER":
+                            System.out.println("DEBUG: Recebido GAMEOVER - " + linha); // Log para depuração
+                            String finalGrid = parts[1];
+                            String result = parts[2];
+                            SwingUtilities.invokeLater(() -> {
+                                updateBoard(finalGrid, false);
+                                showGameOver(result);
+                            });
+                            break; // Use break em vez de return
+                    }
+                }
+            }
+            catch (Exception e) 
+            {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    
+    private static void updateBoard(String grid, boolean minhaVezAtual) 
+    {
+        for (int i = 0; i < 9; i++) 
+        {
+            char c = grid.charAt(i);
+            botoes[i].setText(c == '-' ? "" : String.valueOf(c));
+            botoes[i].setEnabled(minhaVezAtual && botoes[i].getText().isEmpty());
+
+            if (botoes[i].getText().equals("X")) 
+            {
+                botoes[i].setBackground(new Color(100, 149, 237)); 
+            } 
+            else if (botoes[i].getText().equals("O")) 
+            {
+                botoes[i].setBackground(new Color(152, 251, 152)); 
+            } 
+            else 
+            {
+                botoes[i].setBackground(accentColor);
+            }
+        }
+
+
+    }
+
+    private static void setButtonsEnabled(boolean enabled) 
+    {
+        for (JButton b : botoes) 
+        {
+            b.setEnabled(enabled);
+        }
+    }
+
+    private static void showGameOver(String result) 
+    {
+        String msg;
+        if (result.equals("WIN" + numJogador)) msg = "Você venceu!";
+        else if (result.equals("WIN" + (3 - numJogador))) msg = "Você perdeu!";
+        else msg = "Empate!";
+        JOptionPane.showMessageDialog(mainFrame, msg, msg, JOptionPane.PLAIN_MESSAGE);
+        setButtonsEnabled(false);
+
+        System.exit(0);
     }
 
 }
