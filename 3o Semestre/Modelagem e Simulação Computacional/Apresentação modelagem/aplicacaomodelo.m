@@ -1,12 +1,12 @@
 % Modelo SIR simples em MATLAB
 
 % Parâmetros
-beta  = 0.8;   % taxa de transmissão (por dia)
+beta  = 0.3;   % taxa de transmissão (por dia)
 gamma = 0.1;   % taxa de recuperação (por dia)
 
 % População e condições iniciais
-N  = 1000;     % total de pessoas
-S0 = 999;      % suscetíveis iniciais
+N  = 200000000;     % total de pessoas
+S0 = 199999999;      % suscetíveis iniciais
 I0 = 1;        % infectados iniciais
 R0 = 0;        % recuperados iniciais
 

@@ -92,7 +92,8 @@ public class Cliente
             f.setPreferredSize(new Dimension(200, 50));
             f.setBorder(BorderFactory.createLineBorder(inputBorderColor));
 
-            f.addKeyListener(new KeyAdapter() {
+            f.addKeyListener(new KeyAdapter() 
+            {
                 @Override
                 public void keyTyped(KeyEvent e)
                 {
@@ -118,7 +119,8 @@ public class Cliente
         painelTextFields.setBackground(backgroundColor);
 
         //Funcionalidades
-        botao.addMouseListener(new MouseAdapter() {
+        botao.addMouseListener(new MouseAdapter() 
+        {
             @Override
             public void mouseEntered(MouseEvent e)
             {
@@ -172,7 +174,6 @@ public class Cliente
         });
 
 
-        //Posicionamento dos elementos
         GridBagConstraints gbc = new GridBagConstraints();
         
         gbc.gridx = 0;
@@ -239,9 +240,9 @@ public class Cliente
                 } else {
                     String text = botao.getText();
                     if ("X".equals(text)) {
-                        botao.setBackground(new Color(100, 149, 237)); // Azul claro
+                        botao.setBackground(new Color(100, 149, 237)); 
                     } else if ("O".equals(text)) {
-                        botao.setBackground(new Color(152, 251, 152)); // Verde claro
+                        botao.setBackground(new Color(152, 251, 152));
                     } else {
                         botao.setBackground(accentColor);
                     }
@@ -289,14 +290,14 @@ public class Cliente
                             SwingUtilities.invokeLater(() -> updateBoard(grid, minhaVez));
                             break;
                         case "GAMEOVER":
-                            System.out.println("DEBUG: Recebido GAMEOVER - " + linha); // Log para depuração
+                            System.out.println("DEBUG: Recebido GAMEOVER - " + linha); 
                             String finalGrid = parts[1];
                             String result = parts[2];
                             SwingUtilities.invokeLater(() -> {
                                 updateBoard(finalGrid, false);
                                 showGameOver(result);
                             });
-                            break; // Use break em vez de return
+                            break; 
                     }
                 }
             }
