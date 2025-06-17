@@ -1,0 +1,52 @@
+1) C
+2) D
+3) Uma colisão é quando a função hash retorna a mesma posição para duas chaves diferentes, fazendo com que 2 nós ocupem a mesma posição na tabela hash. Para resolver esse problema existem duas soluções, a primeira é o hashing perfeito, onde é necessário saber previamente o conjunto de chaves do conjunto, a outra é o encadeamento, em que é feito uma lista encadeada para armazenar todas as colisões no conjunto.
+4) Min-heap e max-heap tem funcionalidades muito semelhantes, a principal diferença é apenas que no min-heap a raiz armazena o valor mínimo, enquanto que na max-heap a raiz armazena o valor máximo. O min-heap é melhor utilizado em algoritmos de percurso em grafos por exemplo, onde é sempre importante buscar o menor caminho. O max heap é melhor utilizado em problemas onde é necessário buscar o maior valor, como por exemplo, achar a maior área numa matriz dado um intervalo.
+5) Coleta de lixo é um conceito aplicado em linguagens de alto nível que serve para tirar a responsabilidade do usuário de alocar e liberar memória de forma manual. Há duas formas mais comuns de fazer isso, a primeira é a coleta de lixo por contagem de referência, onde cada endereço na memória possível uma variável contadora e quando essa variável chega em 0, essa memória é liberada para uso posterior. Há também a coleta de lixo por rastreamento, em que é percorrido todos os endereços acessíveis da memória, e os que não são acessíveis são considerados lixo e liberados.
+6) F, V, F, V
+7)1. 4
+ 2. 10 4
+ 3. 10 4 3
+ 4. 10 5 3 4
+ 5. 10 5 3 4 1
+
+8)              20
+            10      15
+        5   8     12
+
+9)void heapifyDown(int heap[], int size, int i)
+{
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
+    int largest = i;
+
+    if(left < size && heap[left] > heap[largest])
+    {
+        largest = left;
+    }
+    if(right < size && heap[right] > heap[largest])
+    {
+        largest = right;
+    }
+
+    if(largest != index)
+    {
+        int temp = heap[index];
+        heap[index] = heap[largest];
+        heap[largest] = temp;
+        heapifyDown(heap, size, largest);
+    }
+
+
+}
+
+10) 0 - 21
+    1 -
+    2 -
+    3 - 10
+    4 - 32 
+    5 - 45
+    6 -
+
+CONTAGEM DE REFERENCIA: Contador em cada objeto na memória que conta as referências, se o contador chegar em 0 é considerado lixo.
+Coleta de lixo por rastreamento: Percorre a memória em todas as posições acessíveis, as que não são possíveis ser acessadas são consideradas lixo e liberadas.
