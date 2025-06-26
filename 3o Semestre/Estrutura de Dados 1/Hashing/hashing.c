@@ -102,7 +102,7 @@ void remove_tabela(tabela *t, int chave)
         p = p->prox;
     }
 
-    if(p == NULL) return; // chave não encontrada
+    if(p == NULL) return; 
 
     if(anterior == NULL)
     {
